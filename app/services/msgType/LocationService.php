@@ -66,7 +66,7 @@ class LocationService {
 			 <item>
 			 <Title><![CDATA[" . $v['name'] . " 地址：" . $v['address'] . " 电话:" . $v['telephone'] . "]]></Title>
 			 <Description><![CDATA[" . $v['name'] . " 地址：" . $v['address'] . " 电话:" . $v['telephone'] . "]]></Description>
-			 <PicUrl><![CDATA[picurl]]></PicUrl>
+			 <PicUrl><![CDATA[".$picurl."]]></PicUrl>
 			 <Url><![CDATA[http://api.map.baidu.com/place/detail?uid=" . $v['uid'] . "&output=html&src=" . $v['name'] . "&output=html]]></Url>
 			 </item>";
         }
