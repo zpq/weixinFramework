@@ -40,11 +40,11 @@ class LocationService {
 
         $p_640 = file_get_contents($pic_640);
 
-        file_put_contents(APPPATH . '/public/images/640_' . $fromUsername . ".png", $p_640);
+        file_put_contents(ROOTPATH . '/public/images/640_' . $fromUsername . ".png", $p_640);
 
         $p_80 = file_get_contents($pic_80);
 
-        file_put_contents(APPPATH . '/public/images/80_' . $fromUsername . ".png", $p_80);
+        file_put_contents(ROOTPATH . '/public/images/80_' . $fromUsername . ".png", $p_80);
 
         $ContentArr = $jsonContent['results'];
 
