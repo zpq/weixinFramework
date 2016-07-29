@@ -1,16 +1,18 @@
 <?php
 
 namespace app\services\msgType;
-use app\services\MessageHandler;
+
 /**
  * Description of Location
  *
  * @author Administrator
  */
-class LocationService extends MessageHandler {
+class LocationService {
 
-    public function __construct() {
+    private $posObj;
 
+    public function __construct($postObj) {
+        $this->postObj = $postObj;
     }
 
     public function handle() {
@@ -22,8 +24,8 @@ class LocationService extends MessageHandler {
 
         $Label = $this->postObj->Label;
 
-        $fromUsername = $this->fromUsername;
-        $toUsername = $this->toUsername;
+        $fromUsername = (string)$this->fromUsername;
+        $toUsername = (string)$this->toUsername;
 
 
         $urlstr = "http://api.map.baidu.com/place/v2/search?&query=酒店&location=" . $Location_X . "," . $Location_Y . "&radius=500&output=json&ak=4Zeg9zMHW4wMBEag8pt8DYFW";

@@ -2,16 +2,15 @@
 
 namespace app\services\keywords;
 use app\utils\Xml;
-use app\services\MessageHandler;
 /**
  * Description of TelematicsService
  *
  * @author Administrator
  */
-class TelematicsService extends MessageHandler {
-
-    public function __construct() {
-
+class TelematicsService {
+    private $postObj;
+    public function __construct($postObj) {
+        $this->postObj = $postObj;
     }
 
     public function handle() {
@@ -32,8 +31,10 @@ class TelematicsService extends MessageHandler {
             $telematicsdata.= "\n" . $v['date'] . "\n" . $v['weather'] . "\n" . $v['wind'] . "\n" . $v['temperature'] . "\n";
         }
 
-        $this->postObj->FromUserName = $this->toUsername;
-        $this->postObj->ToUserName = $this->fromUsername;
+        $toUsername = (string)$this->postObj->ToUserName;
+        $fromUsername = (string)$this->postObj->FromUserName;
+        $this->postObj->FromUserName = $toUsername;
+        $this->postObj->ToUserName = $fromUsername;
         $this->postObj->CreateTime = time();
         $this->postObj->Content = $telematicsdata;
         $resultString = Xml::o2x($this->postObj);

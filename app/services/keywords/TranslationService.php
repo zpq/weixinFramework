@@ -2,16 +2,17 @@
 
 namespace app\services\keywords;
 use app\utils\Xml;
-use app\services\MessageHandler;
 /**
  * Description of TranselationService
  *
  * @author Administrator
  */
-class TranslationService extends MessageHandler {
+class TranslationService {
 
-    public function __construct() {
+    private $postObj;
 
+    public function __construct($postObj) {
+        $this->postObj = $postObj;
     }
 
     public function handle() {
@@ -44,8 +45,10 @@ class TranslationService extends MessageHandler {
         $contentStr .= $extension; //拼接扩展查询
 
         // $resultStr = sprintf($this->textTpl, $this->postObj->FromUserName, $this->postObj->ToUserName, time(), $contentStr);
-        $this->postObj->FromUserName = $this->toUsername;
-        $this->postObj->ToUserName = $this->fromUsername;
+        $toUsername = (string)$this->postObj->ToUserName;
+        $fromUsername = (string)$this->postObj->FromUserName;
+        $this->postObj->FromUserName = $toUsername;
+        $this->postObj->ToUserName = $fromUsername;
         $this->postObj->CreateTime = time();
         $this->postObj->Content = $contentStr;
         $resultString = Xml::o2x($this->postObj);
