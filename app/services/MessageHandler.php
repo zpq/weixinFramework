@@ -63,7 +63,7 @@ class MessageHandler {
     }
 
     protected function keywordsHandle() {
-        $keywords = trim($this->postObj->Content));
+        $keywords = trim($this->postObj->Content);
 
         if (mb_substr($keywords, 0, 2, 'UTF-8') == '翻译') {
             $trs = new TranslationService($this->postObj);
