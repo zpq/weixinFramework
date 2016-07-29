@@ -4,6 +4,7 @@ namespace app\services;
 use app\services\msgType\LocationService;
 use app\services\keywords\TranslationService;
 use app\services\keywords\TelematicsService;
+use app\utils\Xml;
 
 /**
  * Description of MessageHandler
@@ -13,6 +14,8 @@ use app\services\keywords\TelematicsService;
 class MessageHandler {
 
     private $postObj;
+    priavte $fromUsername;
+    private $toUsername;
 
     private $textTpl = "<xml>
                         <ToUserName><![CDATA[%s]]></ToUserName>
@@ -35,11 +38,12 @@ class MessageHandler {
 
     public function __construct($postStr) {
         $this->postObj = $postStr;
+        $this->fromUsername = $this->postObj->FromUserName;
+        $this->toUsername = $this->postObj->ToUserName;
     }
 
     public function handle() {
         $this->messageTypeHandle();
-//        $this->keywordsHandle();
     }
 
     protected function messageTypeHandle() {
@@ -90,7 +94,12 @@ class MessageHandler {
     }
 
     protected function sendMessage($contentString = '') {
-        $resultString = sprintf($this->textTpl, $this->postObj->FromUserName, $this->postObj->ToUserName, time(), $contentString);
+        $this->postObj->FromUserName = $this->toUsername;
+        $this->postObj->ToUserName = $this->fromUsername;
+        $this->postObj->CreateTime = time();
+        $this->postObj->Content = $contentString;
+        $resultString = Xml::o2x($this->postObj);
+        // $resultString = sprintf($this->textTpl, $this->postObj->FromUserName, $this->postObj->ToUserName, time(), $contentString);
         return $resultString;
     }
 
