@@ -60,21 +60,6 @@ class MessageHandler {
             $ls = new LocationService($this->postObj);
             die($ls->handle());
         }
-
-
-
-//        if ($MsgType == 'event') {
-//            //判断是否关注
-//            if ($this->postObj->Event == 'subscribe') {
-//                $contentString = "谢谢你关注了我！\n回复相应数字可获得相应服务\n1:查看天气情况\n2:查看周边设施信息\n3:有道翻译";
-//                die($this->sendMessage($contentString));
-//            }
-//        }
-//
-//        if ($MsgType == 'location') {
-//            $ls = new LocationService($this->postObj);
-//            die($ls->handle());
-//        }
     }
 
     protected function keywordsHandle() {

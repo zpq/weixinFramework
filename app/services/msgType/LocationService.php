@@ -8,13 +8,13 @@ namespace app\services\msgType;
  * @author Administrator
  */
 class LocationService {
-    
+
     private $postObj;
-    
+
     public function __construct($postObj) {
        $this->postObj = $postObj;
     }
-    
+
     public function handle() {
         $Location_X = $this->postObj->Location_X;
 
@@ -23,10 +23,10 @@ class LocationService {
         $Scale = $this->postObj->Scale;
 
         $Label = $this->postObj->Label;
-        
-        $fromUsername = $this->postObj->fromUsername;
-        $toUsername = $this->postObj->toUsername;
-        
+
+        $fromUsername = $this->postObj->FromUserName;
+        $toUsername = $this->postObj->ToUserName;
+
 
         $urlstr = "http://api.map.baidu.com/place/v2/search?&query=酒店&location=" . $Location_X . "," . $Location_Y . "&radius=500&output=json&ak=4Zeg9zMHW4wMBEag8pt8DYFW";
 
@@ -58,13 +58,13 @@ class LocationService {
 
         foreach ($ContentArr as $k => $v) {
             if ($k == 0) {
-                $picurl = "http://sheaned.500yun.pw/images/640_" . $fromUsername . ".png";
+                $picurl = "http://sheaned.com/weixin/images/640_" . $fromUsername . ".png";
             } else {
-                $picurl = "http://sheaned.500yun.pw/images/80_" . $fromUsername . ".png";
+                $picurl = "http://sheaned.com/weixin/images/80_" . $fromUsername . ".png";
             }
             $Xmlstr .="
 			 <item>
-			 <Title><![CDATA[" . $v['name'] . " 地址：" . $v['address'] . " 电话:" . $v['telephone'] . "]]></Title> 
+			 <Title><![CDATA[" . $v['name'] . " 地址：" . $v['address'] . " 电话:" . $v['telephone'] . "]]></Title>
 			 <Description><![CDATA[" . $v['name'] . " 地址：" . $v['address'] . " 电话:" . $v['telephone'] . "]]></Description>
 			 <PicUrl><![CDATA[picurl]]></PicUrl>
 			 <Url><![CDATA[http://api.map.baidu.com/place/detail?uid=" . $v['uid'] . "&output=html&src=" . $v['name'] . "&output=html]]></Url>
@@ -73,7 +73,7 @@ class LocationService {
 
         return $Xmlstr .= "</Articles></xml>";
     }
-    
+
 }
 
 ?>

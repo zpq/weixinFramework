@@ -8,9 +8,9 @@ namespace app\services\keywords;
  * @author Administrator
  */
 class TranslationService {
-    
+
     private $postObj;
-    
+
     private $textTpl = "<xml>
                         <ToUserName><![CDATA[%s]]></ToUserName>
                         <FromUserName><![CDATA[%s]]></FromUserName>
@@ -19,11 +19,11 @@ class TranslationService {
                         <Content><![CDATA[%s]]></Content>
                         <FuncFlag>0</FuncFlag>
                        </xml>";
-    
+
     public function __construct($postObj) {
         $this->postObj = $postObj;
     }
-    
+
     public function handle() {
         $keyword = $this->postObj->Content;
         $fanyi = mb_substr($keyword, 0, 2, 'UTF-8'); //翻译
@@ -53,11 +53,11 @@ class TranslationService {
 
         $contentStr .= $extension; //拼接扩展查询
 
-        $resultStr = sprintf($this->textTpl, $this->postObj->fromUsername, $this->postObj->toUsername, time(), $contentStr);
+        $resultStr = sprintf($this->textTpl, $this->postObj->FromUserName, $this->postObj->ToUserName, time(), $contentStr);
 
         return $resultStr;
     }
-    
+
 }
 
 ?>
