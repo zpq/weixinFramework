@@ -11,9 +11,9 @@ use app\services\keywords\TelematicsService;
  * @author Administrator
  */
 class MessageHandler {
-    
+
     private $postObj;
-    
+
     private $textTpl = "<xml>
                         <ToUserName><![CDATA[%s]]></ToUserName>
                         <FromUserName><![CDATA[%s]]></FromUserName>
@@ -22,7 +22,7 @@ class MessageHandler {
                         <Content><![CDATA[%s]]></Content>
                         <FuncFlag>0</FuncFlag>
                        </xml>";
-    
+
     public static $MESSAGE_TYPE_TEXT = 'text';
     public static $MESSAGE_TYPE_IMAGE = 'image';
     public static $MESSAGE_TYPE_VOICE = 'voice';
@@ -31,20 +31,20 @@ class MessageHandler {
     public static $MESSAGE_TYPE_LINK = 'link';
     public static $MESSAGE_TYPE_EVENT = 'event';
     public static $MESSAGE_TYPE_SUBSCRIBE = 'subscribe';
-    
+
 
     public function __construct($postStr) {
         $this->postObj = $postStr;
     }
-    
+
     public function handle() {
         $this->messageTypeHandle();
 //        $this->keywordsHandle();
     }
-    
+
     protected function messageTypeHandle() {
         $MsgType = $this->postObj->MsgType;
-        
+
         if ($MsgType == self::$MESSAGE_TYPE_EVENT) {
             switch ($this->postObj->Event) {
                 case self::$MESSAGE_TYPE_SUBSCRIBE:
@@ -60,9 +60,9 @@ class MessageHandler {
             $ls = new LocationService($this->postObj);
             die($ls->handle());
         }
-        
-        
-        
+
+
+
 //        if ($MsgType == 'event') {
 //            //判断是否关注
 //            if ($this->postObj->Event == 'subscribe') {
@@ -76,15 +76,15 @@ class MessageHandler {
 //            die($ls->handle());
 //        }
     }
-    
+
     protected function keywordsHandle() {
         $keywords = $this->postObj->Content;
-        
+
         if (mb_substr($keywords, 0, 2, 'UTF-8') == '翻译') {
             $trs = new TranslationService($this->postObj);
             die($trs->handle());
         }
-        
+
         switch ($keywords) {
             case '1':
                 $ts = new TelematicsService($this->postObj);
@@ -103,11 +103,10 @@ class MessageHandler {
                 break;
         }
     }
-    
+
     protected function sendMessage($contentString = '') {
-        $resultString = sprintf($this->textTpl, $this->postObj->fromUsername, $this->postObj->toUsername, time(), $contentString);
+        $resultString = sprintf($this->textTpl, $this->postObj->FromUserName, $this->postObj->ToUserName, time(), $contentString);
         return $resultString;
     }
-    
-}
 
+}
