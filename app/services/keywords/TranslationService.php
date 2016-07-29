@@ -49,7 +49,7 @@ class TranslationService extends MessageHandler {
         $this->postObj->CreateTime = time();
         $this->postObj->Content = $contentStr;
         $resultString = Xml::o2x($this->postObj);
-        die($resultStr);
+        die($resultString);
     }
 
 }
