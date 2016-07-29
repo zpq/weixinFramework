@@ -1,6 +1,7 @@
 <?php
 
 namespace app\services\keywords;
+use app\utils\Xml;
 use app\services\MessageHandler;
 /**
  * Description of TelematicsService
