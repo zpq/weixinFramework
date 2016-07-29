@@ -7,7 +7,7 @@ namespace app\services\msgType;
  *
  * @author Administrator
  */
-class LocationService app\service\MessageHandler {
+class LocationService extends app\service\MessageHandler {
 
     public function __construct() {
 

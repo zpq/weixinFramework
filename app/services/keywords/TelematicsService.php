@@ -7,7 +7,7 @@ namespace app\services\keywords;
  *
  * @author Administrator
  */
-class TelematicsService app\service\MessageHandler {
+class TelematicsService extends app\service\MessageHandler {
 
     public function __construct() {
 
