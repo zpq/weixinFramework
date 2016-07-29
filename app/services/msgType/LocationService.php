@@ -24,8 +24,8 @@ class LocationService {
 
         $Label = $this->postObj->Label;
 
-        $fromUsername = (string)$this->fromUsername;
-        $toUsername = (string)$this->toUsername;
+        $fromUsername = (string)$this->postObj->FromUserName;
+        $toUsername = (string)$this->postObj->ToUserName;
 
 
         $urlstr = "http://api.map.baidu.com/place/v2/search?&query=酒店&location=" . $Location_X . "," . $Location_Y . "&radius=500&output=json&ak=4Zeg9zMHW4wMBEag8pt8DYFW";
