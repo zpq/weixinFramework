@@ -14,7 +14,7 @@ use app\utils\Xml;
 class MessageHandler {
 
     private $postObj;
-    priavte $fromUsername;
+    private $fromUsername;
     private $toUsername;
 
     private $textTpl = "<xml>
