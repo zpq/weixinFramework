@@ -1,13 +1,13 @@
 <?php
 
 namespace app\services\keywords;
-
+use app\services\MessageHandler;
 /**
  * Description of TelematicsService
  *
  * @author Administrator
  */
-class TelematicsService extends app\service\MessageHandler {
+class TelematicsService extends MessageHandler {
 
     public function __construct() {
 

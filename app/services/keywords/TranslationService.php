@@ -2,13 +2,13 @@
 
 namespace app\services\keywords;
 use app\utils\Xml;
-
+use app\services\MessageHandler;
 /**
  * Description of TranselationService
  *
  * @author Administrator
  */
-class TranslationService extends app\service\MessageHandler {
+class TranslationService extends MessageHandler {
 
     public function __construct() {
 

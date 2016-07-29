@@ -1,13 +1,13 @@
 <?php
 
 namespace app\services\msgType;
-
+use app\services\MessageHandler;
 /**
  * Description of Location
  *
  * @author Administrator
  */
-class LocationService extends app\service\MessageHandler {
+class LocationService extends MessageHandler {
 
     public function __construct() {
 
