@@ -13,18 +13,10 @@ use app\utils\Xml;
  */
 class MessageHandler {
 
-    private $postObj;
-    private $fromUsername;
-    private $toUsername;
+    public $postObj;
+    public $fromUsername;
+    public $toUsername;
 
-    private $textTpl = "<xml>
-                        <ToUserName><![CDATA[%s]]></ToUserName>
-                        <FromUserName><![CDATA[%s]]></FromUserName>
-                        <CreateTime>%s</CreateTime>
-                        <MsgType><![CDATA[text]]></MsgType>
-                        <Content><![CDATA[%s]]></Content>
-                        <FuncFlag>0</FuncFlag>
-                       </xml>";
 
     public static $MESSAGE_TYPE_TEXT = 'text';
     public static $MESSAGE_TYPE_IMAGE = 'image';
@@ -38,8 +30,12 @@ class MessageHandler {
 
     public function __construct($postStr) {
         $this->postObj = $postStr;
-        $this->fromUsername = $this->postObj->FromUserName;
-        $this->toUsername = $this->postObj->ToUserName;
+        /**
+        *如果不转成string，from(to)Username变量会是SimpleXMLElement类型，是地址引用的，和this->postObj的属性值一样的内存地址
+        * 后面发送信息的时候，交换值的时候会导致fromUsername和toUsername相等
+        */
+        $this->fromUsername = (string)$this->postObj->FromUserName;
+        $this->toUsername = (string)$this->postObj->ToUserName;
     }
 
     public function handle() {
@@ -62,33 +58,33 @@ class MessageHandler {
              $this->keywordsHandle();
         } elseif ($MsgType == self::$MESSAGE_TYPE_LOCATION) {
             $ls = new LocationService($this->postObj);
-            die($ls->handle());
+            $ls->handle();
         }
     }
 
     protected function keywordsHandle() {
-        $keywords = $this->postObj->Content;
+        $keywords = trim()$this->postObj->Content);
 
         if (mb_substr($keywords, 0, 2, 'UTF-8') == '翻译') {
             $trs = new TranslationService($this->postObj);
-            die($trs->handle());
+            $trs->handle();
         }
 
         switch ($keywords) {
             case '1':
                 $ts = new TelematicsService($this->postObj);
-                die($ts->handle());
+                $ts->handle();
                 break;
             case '2':
-                die($this->sendMessage("请发送你的位置信息"));
+                $this->sendMessage("请发送你的位置信息");
                 break;
             case '3':
-                die($this->sendMessage("发送格式如下：\"翻译苹果\"\n结果会得到苹果的英文翻译\"apple\""));
+                $this->sendMessage("发送格式如下：\"翻译苹果\"\n结果会得到苹果的英文翻译\"apple\"");
                 break;
             default:
                 //take data from database, match it
                 //if there is also no match, return help info to server
-                die($this->sendMessage("回复相应数字可获得相应服务\n1:查看天气情况\n2:查看周边设施信息\n3:有道翻译"));
+                $this->sendMessage("回复相应数字可获得相应服务\n1:查看天气情况\n2:查看周边设施信息\n3:有道翻译");
                 break;
         }
     }
@@ -100,7 +96,7 @@ class MessageHandler {
         $this->postObj->Content = $contentString;
         $resultString = Xml::o2x($this->postObj);
         // $resultString = sprintf($this->textTpl, $this->postObj->FromUserName, $this->postObj->ToUserName, time(), $contentString);
-        return $resultString;
+        die($resultString);
     }
 
 }

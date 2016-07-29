@@ -1,31 +1,21 @@
 <?php
 
 namespace app\services\keywords;
+use app\utils\Xml;
 
 /**
  * Description of TranselationService
  *
  * @author Administrator
  */
-class TranslationService {
+class TranslationService extends app\service\MessageHandler {
 
-    private $postObj;
+    public function __construct() {
 
-    private $textTpl = "<xml>
-                        <ToUserName><![CDATA[%s]]></ToUserName>
-                        <FromUserName><![CDATA[%s]]></FromUserName>
-                        <CreateTime>%s</CreateTime>
-                        <MsgType><![CDATA[text]]></MsgType>
-                        <Content><![CDATA[%s]]></Content>
-                        <FuncFlag>0</FuncFlag>
-                       </xml>";
-
-    public function __construct($postObj) {
-        $this->postObj = $postObj;
     }
 
     public function handle() {
-        $keyword = $this->postObj->Content;
+        $keyword = trim($this->postObj->Content);
         $fanyi = mb_substr($keyword, 0, 2, 'UTF-8'); //翻译
         $word = str_replace($fanyi, '', $keyword); //去除翻译两个字
         $key = '435084089';
@@ -53,9 +43,13 @@ class TranslationService {
 
         $contentStr .= $extension; //拼接扩展查询
 
-        $resultStr = sprintf($this->textTpl, $this->postObj->FromUserName, $this->postObj->ToUserName, time(), $contentStr);
-
-        return $resultStr;
+        // $resultStr = sprintf($this->textTpl, $this->postObj->FromUserName, $this->postObj->ToUserName, time(), $contentStr);
+        $this->postObj->FromUserName = $this->toUsername;
+        $this->postObj->ToUserName = $this->fromUsername;
+        $this->postObj->CreateTime = time();
+        $this->postObj->Content = $contentStr;
+        $resultString = Xml::o2x($this->postObj);
+        die($resultStr);
     }
 
 }

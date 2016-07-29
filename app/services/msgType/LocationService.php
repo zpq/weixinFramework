@@ -7,12 +7,10 @@ namespace app\services\msgType;
  *
  * @author Administrator
  */
-class LocationService {
+class LocationService app\service\MessageHandler {
 
-    private $postObj;
+    public function __construct() {
 
-    public function __construct($postObj) {
-       $this->postObj = $postObj;
     }
 
     public function handle() {
@@ -24,8 +22,8 @@ class LocationService {
 
         $Label = $this->postObj->Label;
 
-        $fromUsername = $this->postObj->FromUserName;
-        $toUsername = $this->postObj->ToUserName;
+        $fromUsername = $this->fromUsername;
+        $toUsername = $this->toUsername;
 
 
         $urlstr = "http://api.map.baidu.com/place/v2/search?&query=酒店&location=" . $Location_X . "," . $Location_Y . "&radius=500&output=json&ak=4Zeg9zMHW4wMBEag8pt8DYFW";
@@ -71,7 +69,8 @@ class LocationService {
 			 </item>";
         }
 
-        return $Xmlstr .= "</Articles></xml>";
+        $Xmlstr .= "</Articles></xml>";
+        die($Xmlstr);
     }
 
 }

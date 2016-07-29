@@ -7,21 +7,10 @@ namespace app\services\keywords;
  *
  * @author Administrator
  */
-class TelematicsService {
+class TelematicsService app\service\MessageHandler {
 
-    private $postObj;
+    public function __construct() {
 
-    private $textTpl = "<xml>
-                        <ToUserName><![CDATA[%s]]></ToUserName>
-                        <FromUserName><![CDATA[%s]]></FromUserName>
-                        <CreateTime>%s</CreateTime>
-                        <MsgType><![CDATA[text]]></MsgType>
-                        <Content><![CDATA[%s]]></Content>
-                        <FuncFlag>0</FuncFlag>
-                       </xml>";
-
-    public function __construct($postObj) {
-        $this->postObj = $postObj;
     }
 
     public function handle() {
@@ -39,11 +28,15 @@ class TelematicsService {
         $telematicsdata = $telematicsdata3['currentCity'] . "、" . $telematicsdata2['date'] . "\n";
 
         foreach ($telematicsdata3['weather_data'] as $k => $v) {
-
             $telematicsdata.= "\n" . $v['date'] . "\n" . $v['weather'] . "\n" . $v['wind'] . "\n" . $v['temperature'] . "\n";
         }
 
-        return $resultStr = sprintf($this->textTpl, $this->postObj->FromUserName, $this->postObj->ToUserName, time(), $telematicsdata);
+        $this->postObj->FromUserName = $this->toUsername;
+        $this->postObj->ToUserName = $this->fromUsername;
+        $this->postObj->CreateTime = time();
+        $this->postObj->Content = $telematicsdata;
+        $resultString = Xml::o2x($this->postObj);
+        die($resultString);
     }
 }
 
