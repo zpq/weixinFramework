@@ -81,6 +81,8 @@ class MessageHandler {
             case '3':
                 $this->sendMessage("发送格式如下：\"翻译苹果\"\n结果会得到苹果的英文翻译\"apple\"");
                 break;
+            case '4';
+                $this->sendMessage("http://sheaned.com");
             default:
                 //take data from database, match it
                 //if there is also no match, return help info to server
